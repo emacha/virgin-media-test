@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "petfinder"
+version = "1.0.0"
+description = "Tech test for the Virgin Media MLOps role"
+authors = ["Eduardo Silva <eduardo.public@fastmail.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+loguru = "*"
+polars = "*"
+scikit-learn = "*"
+xgboost = "*"
+google-cloud-storage = "*"
+python-dotenv = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+ruff = "*"
+ipykernel = "*"
+
+[tool.ruff]
+select = [
+    "F", # Pyflakes
+    "E", "W", # Pycodestyle
+    "I", # isort
+    "N", # pep8-naming
+    "D", # pydocstyle
+    "UP", # pyupgrade
+    "PTH", # flake8-use-pathlib
+    "PD", # pandas-vet
+    "TRY", # tryceratops
+]
+ignore = [
+    "D203", # Incompatible with D211
+    "D212", # Incompatible with D213
+    "TRY003", # Pointless
+]
+
+# https://github.com/googleapis/google-cloud-python/issues/11184
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:Deprecated call to `pkg_resources\\.declare_namespace\\('.*'\\):DeprecationWarning",
+    "ignore::DeprecationWarning:google.api_core",
+    "ignore:pkg_resources is deprecated as an API:DeprecationWarning",
+]
+
+[tool.ruff.per-file-ignores]
+# Import rules and missing docstring don't matter for __init__.py
+"__init__.py" = ["E402", "D104", "F401"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
