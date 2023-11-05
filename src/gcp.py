@@ -34,6 +34,7 @@ def get_data() -> pl.DataFrame:
     if not config.TRAIN_PATH.exists():
         logger.debug("Downloading data from GCP")
         data = download_data(config.BUCKET_NAME, config.BLOB_NAME)
+        config.TRAIN_PATH.parent.mkdir(parents=True, exist_ok=True)
         data.write_csv(config.TRAIN_PATH)
 
     return pl.read_csv(config.TRAIN_PATH)
